@@ -10,8 +10,8 @@ class db
     private $charset;
     private $pdo;
 
-    public function __construct($host = '127.0.0.1', $db = 'sectors', $user = 'root', $pass = '', $charset = 'utf8mb4') {
-
+    public function __construct($host = '127.0.0.1', $db = 'sectors', $user = 'root', $pass = '', $charset = 'utf8mb4')
+    {
         $this->host = $host;
         $this->db = $db;
         $this->user = $user;
@@ -20,8 +20,8 @@ class db
         $this->connect();
     }
 
-    private function connect() {
-
+    private function connect()
+    {
         $rest = new PDOStatement();
         $rest->execute();
         $dsn = "mysql:host=$this->host;dbname=$this->db;charset=$this->charset";
@@ -48,6 +48,7 @@ class db
 
         return $this->pdo->lastInsertId();
     }
+
     public function updateUserData($id, $name, $sectors, $terms)
     {
         $stmt = $this->pdo->prepare(
