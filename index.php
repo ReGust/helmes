@@ -6,24 +6,6 @@ $db = new db();
 if ($db) {
     $sectors = $db->loadSectorTree();
 }
-
-if (isset($_POST['action']) && $_POST['action'] == 'saveSectorTree') {
-    $sectors = json_decode($_POST['data']);
-    foreach ($sectors as $sector) {
-        try {
-            $sector->name = str_replace('&nbsp;', ' ', htmlentities($sector->name));
-            $sector->name = trim(html_entity_decode($sector->name));
-            $db->insertSectorData($sector);
-        } catch (PDOException $e) {
-            if (strstr($e->getMessage(),'Duplicate entry')) {
-                continue;
-            }
-            var_dump($e->getMessage());
-            die();
-        }
-    }
-}
-
     if (isset($_POST['saveValues'])) {
         session_start();
 
