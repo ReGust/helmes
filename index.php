@@ -35,20 +35,19 @@ if (isset($_POST['action']) && $_POST['action'] == 'saveSectorTree') {
             $errors[] = 'Palun nõustuge tingimustega';
         }
         if (!isset($errors)) {
-            $selectedSectors = $_POST['sectors'];
-            $name = $_POST['name'];
-            $agreeToTerms = $_POST['agreeToTerms'];
-            if (isset($_SESSION['user_id'])) {
-
-                $db->updateUserData($_SESSION['user_id'], $name, $selectedSectors, $agreeToTerms);
-            }
-            else {
-                try {
+            try {
+                $selectedSectors = $_POST['sectors'];
+                $name = $_POST['name'];
+                $agreeToTerms = $_POST['agreeToTerms'];
+                if (isset($_SESSION['user_id'])) {
+                    $db->updateUserData($_SESSION['user_id'], $name, $selectedSectors, $agreeToTerms);
+                }
+                else {
                     $id = $db->insertUserData($name, $selectedSectors, $agreeToTerms);
                     $_SESSION['user_id'] = $id;
-                } catch (PDOException $e) {
-                    $errors[] = $e->getMessage();
                 }
+            } catch (PDOException $e) {
+                $errors[] = $e->getMessage();
             }
         }
     }
